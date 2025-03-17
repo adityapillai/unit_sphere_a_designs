@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.8, 3.9] 
+        python-version: [3.8, 3.9, 3.10.x] # Add 3.10.x to the matrix
 
     steps:
     - uses: actions/checkout@v2
@@ -23,8 +23,8 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Print Python version for debugging
-      run: python --version
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
