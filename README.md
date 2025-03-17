@@ -7,7 +7,7 @@ A package for computing A Designs over the unit sphere.
 You can install the package using pip:
 
 ```bash
-pip install .
+pip install unit-sphere-a-designs
 ```
 
 ## Usage
