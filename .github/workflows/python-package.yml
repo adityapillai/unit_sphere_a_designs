@@ -1,4 +1,4 @@
-name: Python package
+name: A Design package
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.8, 3.9, 3.10]
+        python-version: [3.8, 3.9, 3.10] # Ensure only valid Python versions are listed
 
     steps:
     - uses: actions/checkout@v2
@@ -23,6 +23,8 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+    - name: Print Python version for debugging
+      run: python --version
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
