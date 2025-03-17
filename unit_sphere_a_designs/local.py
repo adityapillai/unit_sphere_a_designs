@@ -2,13 +2,13 @@ import numpy as np
 import time
 from unit_sphere_a_designs.tools import symmetric_factorization, pairs_mat, random_start
 from numpy.typing import NDArray
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List
 #import matplotlib.pyplot as plt
 
 
 
 
-def local_move(S : NDArray[np.float64], curr_obj: float, keep: list[bool] ) -> float:
+def local_move(S : NDArray[np.float64], curr_obj: float, keep: List[bool] ) -> float:
     
     """
     Updates a given solution by replacing a desin points. Considers replacing each of the k design point in the solution with a point that gives the best improvement in the objective value. 
@@ -120,7 +120,7 @@ def local_move(S : NDArray[np.float64], curr_obj: float, keep: list[bool] ) -> f
         
 
 # pairs = None
-def local_search(d: int, k: int, S: Optional[NDArray[np.float64]] = None, fixed_points: Optional[list[int]] = [], iter_limit: Optional[int] = 1e18) ->  NDArray[np.float64]:
+def local_search(d: int, k: int, S: Optional[NDArray[np.float64]] = None, fixed_points: Optional[List[int]] = [], iter_limit: Optional[int] = 1e18) ->  NDArray[np.float64]:
 
     """
     Runs the local search algortihm given a starting solution S.
