@@ -13,8 +13,8 @@ setup(
             # Add any command-line scripts here
         ],
     },
-    author='Your Name',
-    author_email='your.email@example.com',
+    author='Aditya Pillai',
+    author_email='aditya.pillai53916@gmail.com',
     description='A package for unit sphere A designs.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
