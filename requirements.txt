@@ -1,0 +1,4 @@
+flake8
+pytest
+numpy
+# Add other dependencies here
