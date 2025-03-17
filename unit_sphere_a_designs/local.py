@@ -178,20 +178,3 @@ def local_search(d: int, k: int, S: Optional[NDArray[np.float64]] = None, fixed_
     
     #return new_obj, vals, eigen_time, iters
     return S
-
-
-
-if __name__ == "__main__":
-    
-    # Example Run
-    d = 40
-    k = 2*d + 1
-    
-    S = random_start(d, k)
-    obj_val = np.trace( np.linalg.inv( S @ S.T )  )
-    print(f'Staring with a value of {float(obj_val):.5f}')
-
-    S_LS = local_search(d, k, S, fixed_points = list(range(k)) )
-    new_val = np.trace( np.linalg.inv( S_LS @ S_LS.T )  )
-
-    print(f'Finished with a value of {float(new_val):.5f}')

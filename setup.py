@@ -1,28 +1,24 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='unit_sphere_a_designs',
-    version='0.1.0',
+    name="unit_sphere_a_designs",
+    version="0.1.0",
+    description="A package for local search algorithms on unit sphere designs",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    author="Aditya Pillai",
+    author_email="aditya.pilai63916@gmail.com",
+    url="https://github.com/adityapillai/unit_sphere_a_designs",
     packages=find_packages(),
     install_requires=[
-        'numpy',
-        'pytest'
+        "numpy",
+        "pytest",
+        # Add other dependencies here
     ],
-    entry_points={
-        'console_scripts': [
-            # Add any command-line scripts here
-        ],
-    },
-    author='Aditya Pillai',
-    author_email='aditya.pillai53916@gmail.com',
-    description='A package for unit sphere A designs.',
-    long_description=open('README.md').read(),
-    long_description_content_type='text/markdown',
-    url='https://github.com/adityapillai/unit_sphere_a_designs',
     classifiers=[
-        'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
 )
