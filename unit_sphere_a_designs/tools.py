@@ -67,10 +67,10 @@ def symmetric_factorization(A: NDArray[np.float64]):
     return P, eigenvalues
 
 
-    
 
 
 
 
 
-    
+
+

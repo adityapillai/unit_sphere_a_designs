@@ -1,16 +1,15 @@
 import numpy as np
 import time
-from tools import symmetric_factorization, pairs_mat, random_start
+from unit_sphere_a_designs.tools import symmetric_factorization, pairs_mat, random_start
 from numpy.typing import NDArray
 from typing import Optional, Tuple
-import matplotlib.pyplot as plt
-#from bar import pairs_opt, ls_pairs
+#import matplotlib.pyplot as plt
 
 
 
 
-def local_move(S : NDArray[np.float64], curr_obj: float) -> float:
-
+def local_move(S : NDArray[np.float64], curr_obj: float, keep: list[bool] ) -> float:
+    
     """
     Updates a given solution by replacing a desin points. Considers replacing each of the k design point in the solution with a point that gives the best improvement in the objective value. 
     Chooses the best replacement among these k choices. The function modifies the given matrix S.
@@ -34,6 +33,8 @@ def local_move(S : NDArray[np.float64], curr_obj: float) -> float:
     best_obj = curr_obj
 
     for i in range(S.shape[1]):
+        if keep[i]: continue
+
         x_i = S[:, i].reshape(-1, 1)
 
         X_i = X - x_i @ x_i.T
@@ -119,22 +120,29 @@ def local_move(S : NDArray[np.float64], curr_obj: float) -> float:
         
 
 # pairs = None
-def local_search(d: int, k: int, S: Optional[NDArray[np.float64]] = None, iter_limit: Optional[int] = 1e18) ->  NDArray[np.float64]:
+def local_search(d: int, k: int, S: Optional[NDArray[np.float64]] = None, fixed_points: Optional[list[int]] = [], iter_limit: Optional[int] = 1e18) ->  NDArray[np.float64]:
 
     """
     Runs the local search algortihm given a starting solution S.
 
     Args:
-        d (int): Dimension of the design points
-        k (int) : Number of points in the design
+        d (int): Dimension of the design points.
+        k (int) : Number of points in the design.
         S (Optional[NDArray[np.float64]], optional): Matrix where the columns are the design points. Defaults to a random starting matrix if not supplied.
-        iter_limit (Optional[int], optional): A limit on the number of local moves the algortihm can make. Defaults to 10^18
+        iter_limit (Optional[int], optional): A limit on the number of local moves the algortihm can make. Defaults to 10^18.
+        fixed_points (Optional[List[int]], optional): A (0-indexed) list of indices for design points that should not be replaced in the local search.
         
     Returns:
         S (numpy.ndarray): Returns the final solution.
     """
     if S is None:
         S = random_start(d, k)
+
+    # set up fixed design points for quick access
+    keep = (S.shape[1]) * [False]
+
+    for idx in fixed_points:
+        keep[idx] = True
 
     # make a copy of input matrix so matirx supplied by user won't be modified
     S, S_input = S.copy(), S
@@ -156,7 +164,7 @@ def local_search(d: int, k: int, S: Optional[NDArray[np.float64]] = None, iter_l
         #print(f'Iteration {iters}: {float(curr_obj):.5f}')
         #vals.append(curr_obj)
 
-        new_obj = local_move(S, curr_obj) # if pairs is None else local_move_pairs(S, pairs, curr_obj)
+        new_obj = local_move(S, curr_obj, keep) # if pairs is None else local_move_pairs(S, pairs, curr_obj)
         #, bt
         #eigen_time += bt
 
@@ -183,7 +191,7 @@ if __name__ == "__main__":
     obj_val = np.trace( np.linalg.inv( S @ S.T )  )
     print(f'Staring with a value of {float(obj_val):.5f}')
 
-    S_LS = local_search(d, k, S)
+    S_LS = local_search(d, k, S, fixed_points = list(range(k)) )
     new_val = np.trace( np.linalg.inv( S_LS @ S_LS.T )  )
 
     print(f'Finished with a value of {float(new_val):.5f}')
